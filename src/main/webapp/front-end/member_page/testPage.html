@@ -10,11 +10,11 @@
     
     <script>
         const useQuery = () => {
-  const baseUrl = 'http://localhost:8081/FASTERO';
+  const baseUrl = 'http://localhost:8080/fastero';
 
   const api = {
-    login: '/login',
-    exhibition: '/exhibition',
+    users: '/users',
+    details: '/details',
   };
 
   const onAjax = async (method, url, body) => {

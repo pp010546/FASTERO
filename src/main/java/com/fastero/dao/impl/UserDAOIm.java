@@ -8,11 +8,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
 import com.fastero.dao.intf.UserDAOIn;
 import com.fastero.dao.sql.UserSQL;
 import com.fastero.model.UserVO;
@@ -55,7 +50,7 @@ public class UserDAOIm implements UserDAOIn {
 					vo.setUserName(rs.getString("user_name"));
 					vo.setUserPhone(rs.getString("user_phone"));
 					vo.setUserBuildTime(rs.getObject("user_build_time", LocalDateTime.class));
-					System.out.println(vo.getUserBuildTime());
+//					System.out.println(vo.getUserBuildTime());
 					vo.setUserStatus(rs.getByte("user_status"));
 
 					list.add(vo);

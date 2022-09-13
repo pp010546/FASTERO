@@ -18,21 +18,19 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-@WebServlet(
-		"/users"
-		)
+@WebServlet("/users")
 public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private Gson _gson = new GsonBuilder()
 						    .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
 						    .enableComplexMapKeySerialization()
-						     .serializeNulls()
-						     .setDateFormat(DateFormat.LONG)
-						     .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
-						     .setPrettyPrinting()
-						     .setVersion(1.0)
-						     .create();
+						    .serializeNulls()
+						    .setDateFormat(DateFormat.LONG)
+						    .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
+						    .setPrettyPrinting()
+						    .setVersion(1.0)
+						    .create();
 	private UserServiceIm service = new UserServiceIm();
 	
 
