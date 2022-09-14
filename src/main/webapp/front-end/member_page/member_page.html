@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous" />
+  <title>基本資料</title>
+  <style>
+    form{
+      border: 1px solid blue;
+      margin: 20px 200px;
+      min-width: 247px;
+      vertical-align: middle;
+    }
+    @media (max-width: 757.98px){
+      form{
+        vertical-align: middle;
+        margin: 20px 100px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header></header>
+  <h1 class="d-flex justify-content-center align-content-center">會員中心</h1>
+  <div class="d-flex justify-content-center align-content-center">
+    <button type="button" disabled >基本資料/更新</button>
+    <button type="button" onclick="location.href='./history_page.html'">歷史訂單紀錄</button>
+  </div>
+  <h2 class="d-flex justify-content-center align-content-center">基本資料/更新</h2>
+  <form action="#" method="#" id="form_member_info" >
+
+    <p><label id="label_account">帳號：</label><input type="text" value="#" disabled><span id="span_account_comment"
+        style="font-size: 10px"> 帳號無法變更</span></p>
+    <p><label id="label_password">密碼：</label><input type="password" id="input_password"></p>
+    <p><label id="label_password_check">確認密碼：</label><input type="password" id="input_password_check"></p>
+    <p><label id="label_name">姓名：</label><input type="text" value="#" id="input_name"><span id="span_name_comment"
+        style="font-size: 10px"> 請與證件上之姓名相同，以免無法取餐！</span></p>
+    <p><label id="label_phone">電話：</label><input type="text" value="#" id="input_phone"><span id="span_phone_comment"
+        style="font-size: 10px"> 請輸入手機號碼</span></p>
+    <button type="button" id="btn_reset">重填</button>
+    <button type="submit" id="btn_submit">確認修改</button>
+
+
+  </form>
+
+  <script src="../vendors/jquery/jquery-3.6.0.min.js"></script>
+  <script>
+    // reset方法
+    function reset() {
+      $("#input_password").val("");
+      $("#input_password_check").val("");
+      $("#input_name").val("#");
+      $("#input_phone").val("#");
+    };
+    // 名稱檢查方法
+    function name_check() {
+      const REX = /^[\u4e00-\u9fa5]+$|^[a-zA-Z\s]+$/;
+      if (REX.test($("#input_name").val())) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    // 電話檢查方法
+    function phone_check() {
+
+      const REX = /^(09)[0-9]{8}$/; //09開頭，數字共10碼
+
+      // if (REX.test($("#input_phone").val())) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
+
+      return REX.test($("#input_phone").val());
+    }
+    /*------------------------------按鈕------------------------------*/
+    // 按下重填按鈕，密碼欄位清空並輸入回初始姓名及電話
+    $("#btn_reset").on("click", function () {
+      $("#input_password").val("");
+      $("#input_password_check").val("");
+      $("#input_name").val("#");
+      $("#input_phone").val("#");
+    });
+    // 按下送出按鈕
+    $("#btn_submit").on("click", function () {
+      // 未輸入密碼
+      if (!$("#input_password").val()) {
+        alert("請輸入新密碼！");
+        // 密碼與確認密碼不一致，將兩密碼欄位清空
+      } else if ($("#input_password").val() != $("#input_password_check").val()) {
+        alert("密碼不一致！");
+        $("#input_password").val("");
+        $("#input_password_check").val("");
+        // 姓名驗證未通過
+      } else if (!name_check()) {
+        alert("請輸入中文或英文姓名！Please enter your name in Chinese or English!")
+        // 電話驗證未通過
+      } else if (!phone_check()) {
+        alert("電話格式錯誤！")
+      }
+    })
+    $("#btn_history").on("click", function(){
+      
+    })
+    /*------------------------------按鈕------------------------------*/
+    // 當焦點離開姓名輸入欄
+    $("#input_name").on("blur", function () {
+      // 未輸入姓名
+      if ($("#input_name").val() == "") {
+        alert("請輸入姓名！Please enter your name!")
+        // 姓名驗證失敗
+      } else if (!name_check()) {
+        alert("請輸入中文或英文姓名！Please enter your name in Chinese or English!")
+        // 姓名驗證成功
+      } else {
+        console.log("姓名驗證成功");
+      }
+    })
+    // 當焦點離開電話輸入欄
+    $("#input_phone").on("blur", function () {
+      // 未輸入電話
+      if (!$("#input_phone").val()) {
+        alert("請輸入電話！");
+        // 電話驗證失敗
+      } else if (!phone_check()) {
+        alert("電話格式錯誤！");
+        // 電話驗證成功
+      } else {
+        console.log("電話驗證成功");
+      }
+    })
+  </script>
+</body>
+
+</html>

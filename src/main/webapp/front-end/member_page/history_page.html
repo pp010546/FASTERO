@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>歷史訂單</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous" />
+    <style>
+        
+        form{
+            border: 1px solid blue;
+            margin: 20px;
+        }
+
+        table.table{
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header></header>
+    <h1 class="d-flex justify-content-center align-content-center">會員中心</h1>
+    <div class="d-flex justify-content-center align-content-center">
+        <button type="button" onclick="location.href='./member_page.html'">基本資料/更新</button>
+        <button type="button" disabled>歷史訂單紀錄</button>
+    </div>
+    <h2 class="d-flex justify-content-center align-content-center">歷史訂單紀錄</h2>
+    <form action="#" method="#">
+        <span class="d-flex justify-content-center align-content-center">
+            <button type="button" id="btn_recent_order">最近訂單</button>
+            <input type="text" id="input_query_order" placeholder="訂單關鍵字">
+            <button type="submit" id="btn_submit_query">送出查詢</button>
+        </span>
+
+        <table class="table" id="table_order">
+            <tr>
+                <th>訂單編號</th>
+                <th>訂單日期</th>
+                <th>訂單金額</th>
+                <th>訂單明細</th>
+                <th>店家名稱</th>
+                <th>評論</th>
+            </tr>
+            <tr>
+                <td>111</td>
+                <td>2022-07-08</td>
+                <td>$100</td>
+                <td><a href="#">查看</a></td>
+                <td>八方雲集</td>
+                <td><a href="#">已評論</a></td>
+            </tr>
+            <tr>
+                <td>88</td>
+                <td>2022-06-20</td>
+                <td>$300</td>
+                <td><a href="#">查看</a></td>
+                <td>我家牛排</td>
+                <td><a href="#">尚未評論</a></td>
+            </tr>
+
+        </table>
+    </form>
+
+</body>
+
+</html>
