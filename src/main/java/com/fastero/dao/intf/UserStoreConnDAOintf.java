@@ -1,6 +1,8 @@
-package com.userstoreconn.model;
+package com.fastero.dao.intf;
 
 import java.util.List;
+
+import com.fastero.bean.UserStoreConnVO;
 
 
 public interface UserStoreConnDAOintf {

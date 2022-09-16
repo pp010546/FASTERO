@@ -1,4 +1,4 @@
-package com.userstoreconn.model;
+package com.fastero.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

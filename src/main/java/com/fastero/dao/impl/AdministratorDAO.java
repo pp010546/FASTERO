@@ -1,4 +1,4 @@
-package com.administrator.model;
+package com.fastero.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

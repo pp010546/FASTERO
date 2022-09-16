@@ -1,4 +1,4 @@
-package com.userstoreconn.model;
+package com.fastero.service.impl;
 
 import java.util.List;
 
