@@ -1,4 +1,4 @@
-package com.administrator.model;
+package com.fastero;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.*;
 
 @WebServlet("/loginServlet")
-public class LoginServlet extends HttpServlet {
+public class LoginAdminServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

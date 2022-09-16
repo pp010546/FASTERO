@@ -1,4 +1,4 @@
-package com.administrator.model;
+package com.fastero.dao.intf;
 
 import java.util.List;
 

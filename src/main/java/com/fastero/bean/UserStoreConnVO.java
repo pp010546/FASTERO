@@ -1,4 +1,4 @@
-package com.userstoreconn.model;
+package com.fastero.bean;
 
 import java.sql.Date;
 

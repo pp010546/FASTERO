@@ -1,4 +1,4 @@
-package com.administrator.model;
+package com.fastreo.service.impl;
 
 import java.util.List;
 

@@ -1,5 +1,5 @@
 
-package com.storetype.model;
+package com.fastero.dao.intf;
 
 import java.util.List;
 

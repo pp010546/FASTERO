@@ -1,4 +1,4 @@
-package com.administrator.controller;
+package com.fastero.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.administrator.model.AdministratorDAO;
-import com.administrator.model.AdministratorService;
-import com.administrator.model.AdministratorVO;
+import com.fastero.dao.impl.AdministratorDAO;
+import com.fastero.service.impl.AdministratorService;
+import com.fastero.bean.AdministratorVO;
 
 @WebServlet("/administrator/admin.do")
 public class AdministratorController extends HttpServlet {

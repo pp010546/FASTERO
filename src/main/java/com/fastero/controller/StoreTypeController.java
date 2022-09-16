@@ -1,4 +1,4 @@
-package com.storetype.controller;
+package com.fastero.controller;
 
 import java.io.IOException;
 import java.util.LinkedList;

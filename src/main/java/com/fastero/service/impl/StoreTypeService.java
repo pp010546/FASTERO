@@ -1,4 +1,4 @@
-package com.storetype.model;
+package com.fastero.service.impl;
 
 import java.util.List;
 
