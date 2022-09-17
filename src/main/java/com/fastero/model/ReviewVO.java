@@ -2,7 +2,7 @@ package com.fastero.model;
 
 
 import java.sql.Date;
-
+//
 	public class ReviewVO implements java.io.Serializable{
 		
 		private static final long serialVersionUID = 1L;

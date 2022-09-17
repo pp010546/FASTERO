@@ -6,7 +6,7 @@ import com.fastero.model.ReviewVO;
 
 
 
-
+//
 public interface ReviewDAOIntf {
 	public void insert(ReviewVO reviewVO);
     public void update(ReviewVO reviewVO);

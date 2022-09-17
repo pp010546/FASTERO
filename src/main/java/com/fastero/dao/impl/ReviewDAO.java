@@ -17,7 +17,7 @@ import com.fastero.model.ReviewVO;
 
 
 
-
+//
 public class ReviewDAO implements ReviewDAOIntf{
 
 	// 一個應用程式中,針對一個資料庫 ,共用一個DataSource即可
