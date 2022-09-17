@@ -3,7 +3,7 @@ package com.fastero.model;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.Date;
-
+//
 public class StoreVO implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
