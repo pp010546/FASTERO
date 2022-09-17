@@ -12,7 +12,10 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import org.eclipse.jdt.internal.compiler.batch.Main;
+
+
+import com.fastero.bean.AdministratorVO;
+import com.fastero.dao.intf.AdministratorDAOintf;
 
 public class AdministratorDAO implements AdministratorDAOintf {
 
@@ -214,7 +217,7 @@ public class AdministratorDAO implements AdministratorDAOintf {
 	}
 
 	@Override
-	public List<AdministratorVO> getAll() {
+	public List<com.fastero.dao.intf.AdministratorVO> getAll() {
 		List<AdministratorVO> list = new ArrayList<>();
 		AdministratorVO administratorVO = null;
 

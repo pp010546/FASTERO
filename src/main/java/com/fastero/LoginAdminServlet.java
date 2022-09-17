@@ -4,6 +4,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fastero.bean.AdministratorVO;
+import com.fastero.dao.impl.AdministratorDAO;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;

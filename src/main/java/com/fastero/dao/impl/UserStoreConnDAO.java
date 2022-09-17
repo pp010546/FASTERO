@@ -12,6 +12,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.fastero.bean.UserStoreConnVO;
 import com.storetype.model.StoreTypeVO;
 
 public class UserStoreConnDAO implements UserStoreConnDAOintf {
