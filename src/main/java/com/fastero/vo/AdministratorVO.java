@@ -1,9 +1,13 @@
-package com.fastero.bean;
+package com.fastero.vo;
 
 import java.sql.Date;
 
 public class AdministratorVO implements java.io.Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer administratorId;
 	private String administratorAccount;
 	private String administratorPassword;

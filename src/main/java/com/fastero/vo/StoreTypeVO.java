@@ -1,4 +1,4 @@
-package com.fastero.bean;
+package com.fastero.vo;
 
 import java.sql.Date;
 

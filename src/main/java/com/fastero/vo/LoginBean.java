@@ -1,4 +1,4 @@
-package com.fastero.bean;
+package com.fastero.vo;
 
 public class LoginBean {
 
