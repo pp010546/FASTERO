@@ -3,6 +3,7 @@ package com.fastero.service.impl;
 import com.fastero.common.Result;
 import com.fastero.dao.impl.UserDAOIm;
 import com.fastero.service.intf.UserServiceIn;
+import com.fastero.vo.UserVO;
 
 public class UserServiceIm implements UserServiceIn{
 
@@ -29,6 +30,15 @@ public class UserServiceIm implements UserServiceIn{
 	public Result getById(Integer id) {
 		try {
 			return R.success(DAO.getById(id));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return R.fail(e.toString());
+		}
+	}
+	
+	public Result insert(UserVO vo) {
+		try {
+			return R.success(DAO.insert(vo));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return R.fail(e.toString());

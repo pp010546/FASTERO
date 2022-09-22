@@ -1,4 +1,4 @@
-package com.fastero.model;
+package com.fastero.vo;
 
 import java.time.LocalDateTime;
 

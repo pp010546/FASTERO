@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,17 +33,12 @@ public class OrderDetailController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		
+		
+	}
+	
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		setHeaders(response);
-//		PrintWriter out = response.getWriter();
-//		// Read POST
-//		BufferedReader read = request.getReader();
-//		
-//		// 存字串
-//		String json = read.readLine();
-		
-		System.out.println(_gson.toJson(service.getById(Integer.parseInt(request.getParameter("order_id")))));
-		
-		
 	}
 
 	/*

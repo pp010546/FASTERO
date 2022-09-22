@@ -10,7 +10,7 @@ import java.util.List;
 
 import com.fastero.dao.intf.UserDAOIn;
 import com.fastero.dao.sql.UserSQL;
-import com.fastero.model.UserVO;
+import com.fastero.vo.UserVO;
 
 public class UserDAOIm implements UserDAOIn {
 
@@ -29,9 +29,7 @@ public class UserDAOIm implements UserDAOIn {
 	public List<UserVO> getAll() throws Exception {
 		List<UserVO> list = new ArrayList<UserVO>();
 
-		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FASTERO",
-															"root", 
-															"password");
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FASTERO", "root", "password");
 				PreparedStatement ps = con.prepareStatement(UserSQL.GET_ALL);) {
 			System.out.println("連線成功");
 			try (ResultSet rs = ps.executeQuery()) {
@@ -64,5 +62,30 @@ public class UserDAOIm implements UserDAOIn {
 	public List<UserVO> getById(Integer id) {
 
 		return null;
+	}
+
+	@Override
+	public Integer insert(UserVO vo) {
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FASTERO", "root", "password");
+				PreparedStatement ps = con.prepareStatement(UserSQL.INSERT);) {
+			System.out.println("連線成功");
+			
+			ps.setString(1, vo.getUserAccount());
+			ps.setString(2, vo.getUserPassword());
+			ps.setString(3, vo.getUserName());
+			ps.setString(4, vo.getUserPhone());
+			
+			ps.executeUpdate();
+			
+			return 1;
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+			
+		
+		}
+
 	};
-}
+

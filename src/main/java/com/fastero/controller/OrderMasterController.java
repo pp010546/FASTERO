@@ -1,11 +1,12 @@
 package com.fastero.controller;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,56 +15,47 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fastero.common.LocalDateTimeAdapter;
-import com.fastero.service.impl.UserServiceIm;
-import com.fastero.vo.UserVO;
+import com.fastero.service.impl.OrderMasterServiceIm;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-@WebServlet("/users")
-public class UserController extends HttpServlet {
+@WebServlet("/orders/*")
+public class OrderMasterController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private Gson _gson = new GsonBuilder()
-						    .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
-						    .enableComplexMapKeySerialization()
-						    .serializeNulls()
-						    .setDateFormat(DateFormat.LONG)
-						    .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
-						    .setPrettyPrinting()
-						    .setVersion(1.0)
-						    .create();
-	private UserServiceIm service = new UserServiceIm();
-	
+	private Gson _gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+			.enableComplexMapKeySerialization().serializeNulls().setDateFormat(DateFormat.LONG)
+			.setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).setPrettyPrinting().setVersion(1.0).create();
+	private OrderMasterServiceIm service = new OrderMasterServiceIm();
 
-	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		// CROS
 		setHeaders(response);
-		
-//		response.getWriter().print(_gson.toJson(service.getAll()));
 
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		
-		setHeaders(response);
+		String pathInfo = request.getPathInfo();
 		PrintWriter out = response.getWriter();
-		// Read POST
-		BufferedReader read = request.getReader();
-		// 存字串
-		String json = read.readLine();
-//		String userAccount = json.split("&")[0].split("=")[1];
-//		System.out.println(userAccount);
-		
+//		String id = request.getParameter("orderId");
+
+//		System.out.println("id: " + id);
+//		System.out.println("pathInfo: " + pathInfo);
+
+//		if (id != null) {
+//			out.print(_gson.toJson(service.getById(Integer.parseInt(id))));
+//			return;
+//		} else 
+		if (pathInfo != null) {
+			String id = pathInfo.split("/")[1];
+			out.print(_gson.toJson(service.getById(Integer.parseInt(id))));
+			return;
+		} else {
+			out.print(_gson.toJson(service.getAll()));
+		}
+
 	}
 
-	/*
-	 * CROS
-	 */
 	private void setHeaders(HttpServletResponse response) {
 
 		response.setContentType("application/json;charset=UTF-8"); // 重要
