@@ -26,50 +26,30 @@
     <header></header>
     <h1 class="d-flex justify-content-center align-content-center">會員中心</h1>
 
-    <h2 class="d-flex justify-content-center align-content-center">註冊會員</h2>
+    <h2 class="d-flex justify-content-center align-content-center">會員登入</h2>
     <form action="http://192.168.18.4:8080/fastero/users" method="post" id="form_member_info">
 
-        <p><label id="label_account">帳號：</label><input type="text" id="input_account" placeholder="xxx@xxxx.xxx">
-            <span id="span_account_comment" style="font-size: 10px"> 帳號日後無法變更</span>
-        </p>
-        <p><label id="label_password">密碼：</label><input type="password" id="input_password">
-            <span id="span_password_comment" style="font-size: 10px"> 密碼須包含英文大小寫及數字</span>
-        </p>
-        
-        <p><label id="label_password_check">確認密碼：</label><input type="password" id="input_password_check"></p>
-        <p><label id="label_name">姓名：</label><input type="text" value="" id="input_name" name="user_name">
-            <span id="span_name_comment" style="font-size: 10px"> 請與證件上之姓名相同，以免無法取餐！</span>
-        </p>
-        <p><label id="label_phone">電話：</label><input type="text" value="" id="input_phone" placeholder="09xxxxxxxx"
-                name="user_phone"><span id="span_phone_comment" style="font-size: 10px"> 請輸入手機號碼</span></p>
+        <p><label id="label_account">帳號：</label><input type="text" id="input_account"></p>
+        <p><label id="label_password">密碼：</label><input type="password" id="input_password"></p>
+
         <button type="reset" id="btn_reset">重填</button>
-        <button type="button" id="btn_submit">註冊</button>
+        <button type="button" id="btn_submit">登入</button>
     </form>
 </body>
 <script>
     let account = document.querySelector("#input_account");
     let password = document.querySelector("#input_password");
-    let password_check = document.querySelector("#input_password_check");
-    let name = document.querySelector("#input_name");
-    let phone = document.querySelector("#input_phone");
 
     let btn = document.querySelector("#btn_submit");
 
     btn.onclick = () => {
 
-        if(password.value != password_check.value){
-            alert("確認密碼與密碼不相符");
-            return;
-        }
-
         let data = {
-            userAccount:account.value,
-            userPassword: password.value,
-            userName: name.value,
-            userPhone: phone.value
+            userAccount: account.value,
+            userPassword: password.value
         }
 
-        fetch("http://192.168.18.4:8080/fastero/users", {
+        fetch("http://192.168.18.4:8080/fastero/login", {
             // headers: {
             //     'content-type': 'application/json'
             // },
@@ -88,8 +68,7 @@
             if(data.result == null){
                 alert(data.message);
             }else{
-                alert("註冊成功!");
-                document.querySelector("#btn_reset").onclick;
+                alert("登入成功!");
             }
 
         }).catch(function (error) { // 發生任何錯誤，就會執行 catch 裡的程式

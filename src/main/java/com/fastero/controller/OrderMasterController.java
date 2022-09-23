@@ -24,9 +24,15 @@ import com.google.gson.GsonBuilder;
 public class OrderMasterController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private Gson _gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
-			.enableComplexMapKeySerialization().serializeNulls().setDateFormat(DateFormat.LONG)
-			.setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).setPrettyPrinting().setVersion(1.0).create();
+	private Gson _gson = new GsonBuilder()
+							 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+							 .enableComplexMapKeySerialization()
+							 .serializeNulls()
+							 .setDateFormat(DateFormat.DEFAULT)
+//							 .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
+							 .setPrettyPrinting()
+							 .setVersion(1.0)
+							 .create();
 	private OrderMasterServiceIm service = new OrderMasterServiceIm();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

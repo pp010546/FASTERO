@@ -8,11 +8,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fastero.dao.intf.UserDAOIn;
+import com.fastero.dao.intf.UserDAO;
 import com.fastero.dao.sql.UserSQL;
 import com.fastero.vo.UserVO;
 
-public class UserDAOIm implements UserDAOIn {
+public class UserDAOIm implements UserDAO {
 
 //	private DataSource ds;
 
@@ -31,7 +31,7 @@ public class UserDAOIm implements UserDAOIn {
 
 		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FASTERO", "root", "password");
 				PreparedStatement ps = con.prepareStatement(UserSQL.GET_ALL);) {
-			System.out.println("連線成功");
+			System.out.println("連線成功...準備查詢全部");
 			try (ResultSet rs = ps.executeQuery()) {
 				UserVO vo;
 				while (rs.next()) {
@@ -54,6 +54,7 @@ public class UserDAOIm implements UserDAOIn {
 					list.add(vo);
 				}
 			}
+			System.out.println("資料查詢成功");
 			return list;
 		}
 	}
@@ -68,24 +69,45 @@ public class UserDAOIm implements UserDAOIn {
 	public Integer insert(UserVO vo) {
 		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FASTERO", "root", "password");
 				PreparedStatement ps = con.prepareStatement(UserSQL.INSERT);) {
-			System.out.println("連線成功");
-			
+			System.out.println("連線成功...準備寫入資料");
+
 			ps.setString(1, vo.getUserAccount());
 			ps.setString(2, vo.getUserPassword());
 			ps.setString(3, vo.getUserName());
 			ps.setString(4, vo.getUserPhone());
-			
+
 			ps.executeUpdate();
-			
+			System.out.println("資料寫入成功");
 			return 1;
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("資料寫入失敗");
 			return -1;
 		}
-			
-		
+	}
+
+	@Override
+	public String getByAccount(String account) throws Exception {
+
+		final String sql = "select * from `User` where user_account = ?";
+
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FASTERO", "root", "password");
+				PreparedStatement ps = con.prepareStatement(sql);) {
+			System.out.println("連線成功...準備查詢帳號密碼");
+
+			ps.setString(1, account);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				
+				if (rs.next()) {
+					System.out.println("帳號密碼查詢成功...回傳密碼");
+					return rs.getString("user_password");
+				}
+				System.out.println("帳號密碼查詢成功...查無帳號");
+				return null;
+			}
 		}
+	}
 
-	};
-
+};
