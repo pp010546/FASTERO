@@ -1,46 +1,50 @@
 package com.fastero.controller;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.time.LocalDateTime;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fastero.service.impl.OrderDetailServiceIm;
+import com.fastero.common.LocalDateTimeAdapter;
+import com.fastero.service.impl.UserServiceIm;
+import com.fastero.service.intf.UserService;
+import com.fastero.vo.UserVO;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-
-@WebServlet("/details")
-public class OrderDetailController extends HttpServlet {
+@WebServlet("/login")
+public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	private Gson _gson = new Gson();
-	private OrderDetailServiceIm service= new OrderDetailServiceIm();
+	UserService service = new UserServiceIm();
+	private Gson _gson = new GsonBuilder()
+		    .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+		    .enableComplexMapKeySerialization()
+		    .serializeNulls()
+		    .setDateFormat(DateFormat.DEFAULT)
+//		    .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
+		    .setPrettyPrinting()
+		    .setVersion(1.0)
+		    .create();
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		// CROS
-		setHeaders(response);
-		
-		response.getWriter().print(_gson.toJson(service.getAll()));
-		
-	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
+		setHeaders(response);
+		PrintWriter out = response.getWriter();
+		UserVO vo = _gson.fromJson(request.getReader().readLine(), UserVO.class);
+		out.print(_gson.toJson(service.login(vo.getUserAccount(), vo.getUserPassword())));
 		
 	}
 	
+	@Override
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		setHeaders(response);
 	}
-
+	
 	/*
 	 * CROS
 	 */
@@ -56,4 +60,5 @@ public class OrderDetailController extends HttpServlet {
 		response.addHeader("Access-Control-Allow-Headers", "*");
 		response.addHeader("Access-Control-Max-Age", "86400");
 	}
+
 }
