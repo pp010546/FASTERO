@@ -18,8 +18,8 @@ import com.fastero.vo.UserVO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-@WebServlet("/login")
-public class LoginController extends HttpServlet {
+@WebServlet("/login/users")
+public class UserLoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	UserService service = new UserServiceIm();
 	private Gson _gson = new GsonBuilder()
