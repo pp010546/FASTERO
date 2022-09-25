@@ -28,7 +28,7 @@ public class OrderMasterController extends HttpServlet {
 							 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
 							 .enableComplexMapKeySerialization()
 							 .serializeNulls()
-							 .setDateFormat(DateFormat.DEFAULT)
+							 .setDateFormat(DateFormat.DATE_FIELD)
 //							 .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
 							 .setPrettyPrinting()
 							 .setVersion(1.0)

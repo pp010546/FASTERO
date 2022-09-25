@@ -108,13 +108,13 @@
             await fetch(baseUrl + id)
                 .then((res) => res.json())
                 .then((data) => {
-                    if(data.Result == ""){
+                    if(data.result == ""){
                         alert("此訂單編號不存在!");
                         return;
                     }else{
 
                         document.querySelector("#order").innerHTML = 
-                        data.Result.map((e) => orderTamplate(e.OrderId, e.OrderTime, e.OrderAmount, e.StoreId, e.OrderStatus)).join("");
+                        data.result.map((e) => orderTamplate(e.orderId, e.orderTime, e.orderAmount, e.storeId, e.orderStatus)).join("");
                     }
 
                     
