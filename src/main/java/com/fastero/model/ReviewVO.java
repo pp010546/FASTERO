@@ -28,7 +28,7 @@ import java.sql.Date;
 			this.review_time = review_time;
 		}
 		public ReviewVO() {
-			// TODO Auto-generated constructor stub
+			
 		}
 		public Integer getReview_id() {
 			return review_id;

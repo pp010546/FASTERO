@@ -15,7 +15,7 @@ public class ReviewService {
 	}
 
 	public ReviewVO addReview(Integer user_id, Integer store_id,
-			Integer review_point, String review_text, String review_store_response, java.sql.Date review_time) {
+			Integer review_point, String review_text) {
 
 		ReviewVO reviewVO = new ReviewVO();
 
@@ -23,23 +23,20 @@ public class ReviewService {
 		reviewVO.setStore_id(store_id);
 		reviewVO.setReview_point(review_point);
 		reviewVO.setReview_text(review_text);
-		reviewVO.setReview_store_response(review_store_response);
-		reviewVO.setReview_time(review_time);
 		dao.insert(reviewVO);
 
 		return reviewVO;
 	}
 
-	public ReviewVO updateReview( Integer user_id, Integer store_id,
-			Integer review_point, String review_text, String review_store_response) {
+	public ReviewVO updateReview(Integer review_id, Integer user_id, Integer store_id,
+			Integer review_point, String review_text) {
 
 		ReviewVO reviewVO = new ReviewVO();
-
+		reviewVO.setReview_id(review_id);
 		reviewVO.setUser_id(user_id);
 		reviewVO.setStore_id(store_id);
 		reviewVO.setReview_point(review_point);
 		reviewVO.setReview_text(review_text);
-		reviewVO.setReview_store_response(review_store_response);
 		dao.update(reviewVO);
 
 		return reviewVO;
@@ -50,12 +47,16 @@ public class ReviewService {
 	
 	}
 	
-	public ReviewVO getOneReview(Integer review_id) {
-		return dao.findByPrimaryKey(review_id);
+	public ReviewVO getOneReview(Integer user_id) {
+		return dao.findByPrimaryKey(user_id);
 	}
 
 	public List<ReviewVO> getAll() {
 		return dao.getAll();
+	}
+
+	public ReviewVO getOneReviewforupdate(Integer review_id) {
+		return dao.findReviewid(review_id);
 	}
 
 }
