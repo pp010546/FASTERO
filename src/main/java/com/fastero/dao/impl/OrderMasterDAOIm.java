@@ -19,13 +19,12 @@ import com.fastero.model.OrderMasterVO;
 public class OrderMasterDAOIm implements OderMasterDAOIn {
 
 	private static DataSource ds = null;
-	private static OrderMasterSQL SQL = null;
 
 	public OrderMasterDAOIm() {
 		try {
 			Context ctx = new InitialContext();
 			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/FASTERO");
-			SQL = new OrderMasterSQL();
+
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
@@ -35,7 +34,8 @@ public class OrderMasterDAOIm implements OderMasterDAOIn {
 	public List<OrderMasterVO> getAll() {
 		List<OrderMasterVO> list = new ArrayList<>();
 		OrderMasterVO vo = null;
-		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.GET_ALL);) {
+		try (Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(OrderMasterSQL.GET_ALL);) {
 			System.out.println("連線成功");
 			try (ResultSet rs = pstmt.executeQuery()) {
 				while (rs.next()) {
