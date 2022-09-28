@@ -1,4 +1,4 @@
-package com.fastero.model;
+package com.fastero.vo;
 
 import java.time.LocalDateTime;
 
@@ -6,13 +6,17 @@ public class UserVO {
 	
 	//'userId', 'userAccount', 'userPassword', 'userName', 'userPhone', 'userBuildTime', 'userStatus'
 	
-	private int userId;
+	private Integer userId;
 	private String userAccount;
 	private String userPassword;
 	private String userName;
 	private String userPhone;
 	private LocalDateTime userBuildTime;
-	private byte userStatus;
+	private Byte userStatus;
+	
+//	public UserVO() {
+//		
+//	}
 	
 	public int getUserId() {
 		return userId;

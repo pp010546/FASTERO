@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.fastero.dao.intf.OrderDetailDAOIn;
 import com.fastero.dao.sql.OrderDetailSQL;
-import com.fastero.model.OrderDetailVO;
+import com.fastero.vo.OrderDetailVO;
 
 public class OrderDetailDAOIm implements OrderDetailDAOIn {
 

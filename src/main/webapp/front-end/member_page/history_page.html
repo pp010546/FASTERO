@@ -9,13 +9,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous" />
     <style>
-        
-        form{
+        form {
             border: 1px solid blue;
             margin: 20px;
         }
 
-        table.table{
+        table.table {
             border: 1px solid red;
         }
     </style>
@@ -30,41 +29,118 @@
         <button type="button" disabled>歷史訂單紀錄</button>
     </div>
     <h2 class="d-flex justify-content-center align-content-center">歷史訂單紀錄</h2>
-    <form action="#" method="#">
+    <form action="http://192.168.18.4:8080/fastero/details" method="get">
         <span class="d-flex justify-content-center align-content-center">
             <button type="button" id="btn_recent_order">最近訂單</button>
-            <input type="text" id="input_query_order" placeholder="訂單關鍵字">
-            <button type="submit" id="btn_submit_query">送出查詢</button>
+            <input type="text" id="input_query_order" name="order_id" placeholder="訂單編號">
+            <button type="button" id="btn_submit_query">送出查詢</button>
         </span>
 
         <table class="table" id="table_order">
-            <tr>
-                <th>訂單編號</th>
-                <th>訂單日期</th>
-                <th>訂單金額</th>
-                <th>訂單明細</th>
-                <th>店家名稱</th>
-                <th>評論</th>
-            </tr>
-            <tr>
-                <td>111</td>
-                <td>2022-07-08</td>
-                <td>$100</td>
-                <td><a href="#">查看</a></td>
-                <td>八方雲集</td>
-                <td><a href="#">已評論</a></td>
-            </tr>
-            <tr>
-                <td>88</td>
-                <td>2022-06-20</td>
-                <td>$300</td>
-                <td><a href="#">查看</a></td>
-                <td>我家牛排</td>
-                <td><a href="#">尚未評論</a></td>
-            </tr>
+            <thead>
+                <tr>
+                    <!-- <th>訂單編號</th>
+                    <th>產品編號</th>
+                    <th>產品價格</th>
+                    <th>產品數量</th> -->
+                    <th>訂單編號</th>
+                    <th>訂單日期</th>
+                    <th>訂單金額</th>
+                    <th>訂單明細</th>
+                    <th>店家名稱</th>
+                    <th>評論</th>
+                </tr>
+            </thead>
+            <tbody id="order">
+                <!-- <tr>
+                    <td>111</td>
+                    <td>2022-07-08</td>
+                    <td>$100</td>
+                    <td><a href="#">查看</a></td>
+                    <td>八方雲集</td>
+                    <td><a href="#">已評論</a></td>
+                </tr>
+                <tr>
+                    <td>88</td>
+                    <td>2022-06-20</td>
+                    <td>$300</td>
+                    <td><a href="#">查看</a></td>
+                    <td>我家牛排</td>
+                    <td><a href="#">尚未評論</a></td>
+                </tr> -->
+            </tbody>
 
         </table>
     </form>
+
+
+    <script>
+        // "orderId": 1,
+        // "productId": 6,
+        // "price": 180,
+        // "quantity": 1
+        const baseUrl = "http://localhost:8080/fastero/orders";
+
+        const btn = document.querySelector("#btn_submit_query");
+        const input = document.querySelector("#input_query_order");
+
+        window.onload = () =>{
+            get("");
+        }
+
+
+        btn.onclick = () =>{
+            let value = input.value;
+            // if(!!value){
+            //     get(input.value);
+            //     return;
+            // }
+            // get("");
+            if(value != ""){
+                get("/" + value);
+                return;
+            }
+            get("");
+
+        }
+
+        async function get(id) {
+            await fetch(baseUrl + id)
+                .then((res) => res.json())
+                .then((data) => {
+                    if(data.Result == ""){
+                        alert("此訂單編號不存在!");
+                        return;
+                    }else{
+
+                        document.querySelector("#order").innerHTML = 
+                        data.Result.map((e) => orderTamplate(e.OrderId, e.OrderTime, e.OrderAmount, e.StoreId, e.OrderStatus)).join("");
+                    }
+
+                    
+                })
+                
+        }
+        //先以訂單編號查詢，如果之後有餘力再以訂單關鍵字
+        function orderTamplate(orderId, orderTime, orderAmount, storeId, orderStatus) {
+
+        return `<tr>
+            <td>${orderId}</td>
+            <td>${orderTime}</td>
+            <td>${orderAmount}</td>
+            <td><a href="#">查看</td>
+            <td>${storeId}</td>
+            <td><a href="#">${orderStatus}</td>
+        </tr>`
+            // return `<tr>
+            //     <th>${orderId}</th>
+            //     <th>${productId}</th>
+            //     <th>${price}</th>
+            //     <th>${quantity}</th>
+            // </tr>`
+        }
+
+    </script>
 
 </body>
 

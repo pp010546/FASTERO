@@ -2,7 +2,7 @@ package com.fastero.dao.intf;
 
 import java.util.List;
 
-import com.fastero.model.OrderDetailVO;
+import com.fastero.vo.OrderDetailVO;
 
 public interface OrderDetailDAOIn {
 	

@@ -25,7 +25,7 @@ public class ReviewDAO implements ReviewDAOIntf{
 		static {
 			try {
 				Context ctx = new InitialContext();
-				ds = (DataSource) ctx.lookup("java:comp/env/jdbc/javaFramework");
+				ds = (DataSource) ctx.lookup("java:comp/env/jdbc/FASTERO");
 			} catch (NamingException e) {
 				e.printStackTrace();
 			}
@@ -34,15 +34,17 @@ public class ReviewDAO implements ReviewDAOIntf{
 		
 	//review_id,user_id,store_id,review_point,review_text,review_store_response,review_time
 		private static final String INSERT_STMT = 
-				"INSERT INTO Review (user_id,store_id,review_point,review_text,review_store_response,review_time) VALUES (?, ?, ?, ?, ?, ?)";
+				"INSERT INTO Review (user_id,store_id,review_point,review_text) VALUES (?, ?, ?, ?)";
 			private static final String GET_ALL_STMT = 
 				"SELECT review_id,user_id,store_id,review_point,review_text,review_store_response,review_time FROM Review order by review_id";
 			private static final String GET_ONE_STMT = 
-				"SELECT review_id,user_id,store_id,review_point,sal,review_text,review_store_response,review_time FROM Review where review_id = ?";
+				"SELECT review_id,user_id,store_id,review_point,review_text,review_store_response,review_time FROM Review where user_id = ?";
 			private static final String DELETE = 
 				"DELETE FROM Review where review_id = ?";
 			private static final String UPDATE = 
-				"UPDATE Review set user_id=?, store_id=?, review_point=?, review_text=?, review_store_response=?, review_time=? where review_id = ?";
+				"UPDATE Review set user_id=?, store_id=?, review_point=?, review_text=? where review_id = ?";
+			private static final String GET_ONE_SELECT = 
+					"SELECT review_id,user_id,store_id,review_point,review_text,review_store_response,review_time FROM Review where review_id = ?";
 			
 			
 			
@@ -56,13 +58,13 @@ public class ReviewDAO implements ReviewDAOIntf{
 					con = ds.getConnection();
 					pstmt = con.prepareStatement(INSERT_STMT);
 
-					pstmt.setInt(1, reviewVO.getReview_id());
-					pstmt.setInt(2, reviewVO.getUser_id());
-					pstmt.setInt(3, reviewVO.getStore_id());
-					pstmt.setInt(4, reviewVO.getReview_point());
-					pstmt.setString(5, reviewVO.getReview_text());
-					pstmt.setString(6, reviewVO.getReview_store_response());
-					pstmt.setDate(7, reviewVO.getReview_time());
+//					pstmt.setInt(1, reviewVO.getReview_id());
+					pstmt.setInt(1, reviewVO.getUser_id());
+					pstmt.setInt(2, reviewVO.getStore_id());
+					pstmt.setInt(3, reviewVO.getReview_point());
+					pstmt.setString(4, reviewVO.getReview_text());
+//					pstmt.setString(6, reviewVO.getReview_store_response());
+//					pstmt.setDate(7, reviewVO.getReview_time());
 
 					pstmt.executeUpdate();
 
@@ -100,13 +102,14 @@ public class ReviewDAO implements ReviewDAOIntf{
 					con = ds.getConnection();
 					pstmt = con.prepareStatement(UPDATE);
 
-					pstmt.setInt(1, reviewVO.getReview_id());
-					pstmt.setInt(2, reviewVO.getUser_id());
-					pstmt.setInt(3, reviewVO.getStore_id());
-					pstmt.setInt(4, reviewVO.getReview_point());
-					pstmt.setString(5, reviewVO.getReview_text());
-					pstmt.setString(6, reviewVO.getReview_store_response());
-					pstmt.setDate(7, reviewVO.getReview_time());
+					
+					pstmt.setInt(1, reviewVO.getUser_id());
+					pstmt.setInt(2, reviewVO.getStore_id());
+					pstmt.setInt(3, reviewVO.getReview_point());
+					pstmt.setString(4, reviewVO.getReview_text());
+					pstmt.setInt(5, reviewVO.getReview_id());
+//					pstmt.setString(6, reviewVO.getReview_store_response());
+//					pstmt.setDate(7, reviewVO.getReview_time());
 
 					pstmt.executeUpdate();
 
@@ -172,7 +175,7 @@ public class ReviewDAO implements ReviewDAOIntf{
 				
 			}
 			@Override
-			public ReviewVO findByPrimaryKey(Integer review_id) {
+			public ReviewVO findByPrimaryKey(Integer user_id) {
 				ReviewVO reviewVO = null;
 				Connection con = null;
 				PreparedStatement pstmt = null;
@@ -184,7 +187,7 @@ public class ReviewDAO implements ReviewDAOIntf{
 					con = ds.getConnection();
 					pstmt = con.prepareStatement(GET_ONE_STMT);
 
-					pstmt.setInt(1, review_id);
+					pstmt.setInt(1, user_id);
 
 					rs = pstmt.executeQuery();
 
@@ -234,7 +237,7 @@ public class ReviewDAO implements ReviewDAOIntf{
 			@Override
 			public List<ReviewVO> getAll() {
 				List<ReviewVO> list = new ArrayList<ReviewVO>();
-				ReviewVO reviewVO = null;
+				ReviewVO ReviewVO = null;
 
 				Connection con = null;
 				PreparedStatement pstmt = null;
@@ -248,15 +251,15 @@ public class ReviewDAO implements ReviewDAOIntf{
 
 					while (rs.next()) {
 						
-						reviewVO = new ReviewVO();
-						reviewVO.setReview_id(rs.getInt("review_id"));
-						reviewVO.setUser_id(rs.getInt("user_id"));
-						reviewVO.setStore_id(rs.getInt("store_id"));
-						reviewVO.setReview_point(rs.getInt("review_point"));
-						reviewVO.setReview_text(rs.getString("review_text"));
-						reviewVO.setReview_store_response(rs.getString("review_store_response"));
-						reviewVO.setReview_time(rs.getDate("review_time"));
-						list.add(reviewVO); // Store the row in the list
+						ReviewVO = new ReviewVO();
+						ReviewVO.setReview_id(rs.getInt("review_id"));
+						ReviewVO.setUser_id(rs.getInt("user_id"));
+						ReviewVO.setStore_id(rs.getInt("store_id"));
+						ReviewVO.setReview_point(rs.getInt("review_point"));
+						ReviewVO.setReview_text(rs.getString("review_text"));
+						ReviewVO.setReview_store_response(rs.getString("review_store_response"));
+						ReviewVO.setReview_time(rs.getDate("review_time"));
+						list.add(ReviewVO); // Store the row in the list
 					}
 
 					// Handle any driver errors
@@ -289,6 +292,67 @@ public class ReviewDAO implements ReviewDAOIntf{
 				}
 				return list;
 			
+			}
+
+			@Override
+			public ReviewVO findReviewid(Integer review_id) {
+				ReviewVO reviewVO = null;
+				Connection con = null;
+				PreparedStatement pstmt = null;
+				ResultSet rs = null;
+				
+
+				try {
+
+					con = ds.getConnection();
+					pstmt = con.prepareStatement(GET_ONE_SELECT);
+
+					pstmt.setInt(1, review_id);
+
+					rs = pstmt.executeQuery();
+
+					while (rs.next()) {
+						// empVo 也稱為 Domain objects
+						reviewVO = new ReviewVO();
+						reviewVO.setReview_id(rs.getInt("review_id"));
+						reviewVO.setUser_id(rs.getInt("user_id"));
+						reviewVO.setStore_id(rs.getInt("store_id"));
+						reviewVO.setReview_point(rs.getInt("review_point"));
+						reviewVO.setReview_text(rs.getString("review_text"));
+						reviewVO.setReview_store_response(rs.getString("review_store_response"));
+						reviewVO.setReview_time(rs.getDate("review_time"));
+					}
+
+					// Handle any driver errors
+				} catch (SQLException se) {
+					throw new RuntimeException("A database error occured. "
+							+ se.getMessage());
+					// Clean up JDBC resources
+				} finally {
+					if (rs != null) {
+						try {
+							rs.close();
+						} catch (SQLException se) {
+							se.printStackTrace(System.err);
+						}
+					}
+					if (pstmt != null) {
+						try {
+							pstmt.close();
+						} catch (SQLException se) {
+							se.printStackTrace(System.err);
+						}
+					}
+					if (con != null) {
+						try {
+							con.close();
+						} catch (Exception e) {
+							e.printStackTrace(System.err);
+						}
+					}
+				}
+			
+				return reviewVO;
 			}
 
 					
