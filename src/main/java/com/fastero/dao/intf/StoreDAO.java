@@ -10,5 +10,7 @@ public interface StoreDAO {
 	public List<StoreVO> selectAll();
 	
 	public Integer insert(StoreVO vo);
+	
+	public StoreVO getByAccount(String account);
 
 }

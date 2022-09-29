@@ -10,34 +10,50 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fastero.common.LocalDateTimeAdapter;
+import com.fastero.dao.impl.StoreDAOImpl;
+import com.fastero.dao.intf.StoreDAO;
+import com.fastero.service.impl.StoreServiceImpl;
 import com.fastero.service.impl.UserServiceIm;
+import com.fastero.service.intf.StoreService;
 import com.fastero.service.intf.UserService;
+import com.fastero.vo.StoreVO;
 import com.fastero.vo.UserVO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 
-@WebServlet("/Login/Stores")
+@WebServlet("/login/stores")
 public class StoreLoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	UserService service = new UserServiceIm();
+	StoreService service = new StoreServiceImpl();
 	private Gson _gson = new GsonBuilder()
 		    .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
 		    .enableComplexMapKeySerialization()
 		    .serializeNulls()
 		    .setDateFormat(DateFormat.DEFAULT)
-//		    .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
 		    .setPrettyPrinting()
 		    .setVersion(1.0)
 		    .create();
+//	private HttpSession session;	
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		setHeaders(response);
 		PrintWriter out = response.getWriter();
-		UserVO vo = _gson.fromJson(request.getReader().readLine(), UserVO.class);
-		out.print(_gson.toJson(service.login(vo.getUserAccount(), vo.getUserPassword())));
+		StoreVO vo = _gson.fromJson(request.getReader().readLine(), StoreVO.class);
+		out.print(_gson.toJson(service.login(vo.getStoreAdminAccount(), vo.getStoreAdminPassword())));
+		
+//		//後端session
+//		session = request.getSession(false); 	//先預設取用已存在的session
+//		if(session == null) { 					//若沒有已存在的session -> 新建一個
+//			session = request.getSession();
+//		}
+//		session.setAttribute("storeInfo", service.g);
+//		out.print(_gson.toJson(session));
+		
+		
 		
 	}
 	

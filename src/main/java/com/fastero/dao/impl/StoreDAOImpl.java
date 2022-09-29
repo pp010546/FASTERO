@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 
 import com.fastero.dao.intf.StoreDAO;
 import com.fastero.vo.StoreVO;
+
 //
 public class StoreDAOImpl implements StoreDAO {
 //	private DataSource dataSource;
@@ -20,11 +21,10 @@ public class StoreDAOImpl implements StoreDAO {
 //		dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/FASTERO");
 //	}
 	@Override
-	public List<StoreVO> selectAll(){
+	public List<StoreVO> selectAll() {
 		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/FASTERO", "root", "password");
 				PreparedStatement pstt = conn.prepareStatement("SELECT * FROM FASTERO.Store");
-				ResultSet rSet = pstt.executeQuery()
-		){
+				ResultSet rSet = pstt.executeQuery()) {
 //			store_id, store_name, store_address, store_longitude, store_latitude, store_phone, 
 //			store_email, store_admin_account, store_admin_password, store_admin_phone, 
 //			store_admin_address, store_preview_img, store_introduction, store_open_status, 
@@ -63,6 +63,7 @@ public class StoreDAOImpl implements StoreDAO {
 			return null;
 		}
 	}
+
 	@Override
 	public Integer insert(StoreVO vo) {
 //		store_id, store_name, store_address, store_longitude, store_latitude, store_phone, 
@@ -71,12 +72,12 @@ public class StoreDAOImpl implements StoreDAO {
 //		store_account_status, store_admin_name, store_admin_id, store_build_time, 
 //		store_update_time, store_comment_number, store_total_star, store_business_time
 		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/FASTERO", "root", "password");
-				PreparedStatement ps = conn.prepareStatement("insert into `store` (store_admin_account, store_admin_password, "
-														   + "store_admin_name, store_admin_id, store_admin_phone, store_admin_address, "
-														   + "store_name, store_address, store_phone, store_email, store_introduction) "
-														   + "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-		){
-			
+				PreparedStatement ps = conn
+						.prepareStatement("insert into `store` (store_admin_account, store_admin_password, "
+								+ "store_admin_name, store_admin_id, store_admin_phone, store_admin_address, "
+								+ "store_name, store_address, store_phone, store_email, store_introduction) "
+								+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");) {
+
 			ps.setString(1, vo.getStoreAdminAccount());
 			ps.setString(2, vo.getStoreAdminPassword());
 			ps.setString(3, vo.getStoreAdminName());
@@ -91,10 +92,78 @@ public class StoreDAOImpl implements StoreDAO {
 
 			ps.executeUpdate();
 			return 1;
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-			return -1; 
+			return -1;
 		}
 	}
+
+	@Override
+	public StoreVO getByAccount(String account) {
+
+		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/FASTERO", "root", "password");
+				PreparedStatement ps = conn
+						.prepareStatement("SELECT * FROM FASTERO.Store where store_admin_account = ?;");) {
+
+			ps.setString(1, account);
+
+			ResultSet rs = ps.executeQuery();
+			StoreVO storeVO = null;
+
+			while (rs.next()) {
+				storeVO = new StoreVO();
+				storeVO.setStoreId(rs.getInt("store_id"));
+				storeVO.setStoreName(rs.getString("store_name"));
+				storeVO.setStoreAddress(rs.getNString("store_address"));
+				storeVO.setLongitude(rs.getNString("store_longitude"));
+				storeVO.setLatitude(rs.getString("store_latitude"));
+				storeVO.setStorePhone(rs.getNString("store_phone"));
+				storeVO.setStoreEmail(rs.getNString("store_email"));
+				storeVO.setStoreAdminAccount(rs.getNString("store_admin_account"));
+				storeVO.setStoreAdminPassword(rs.getNString("store_admin_password"));
+				storeVO.setStoreAdminPhone(rs.getNString("store_admin_phone"));
+				storeVO.setStoreAdminAddress(rs.getNString("store_admin_address"));
+				storeVO.setStoreImg(rs.getBlob("store_preview_img"));
+				storeVO.setStoreIntroduction(rs.getNString("store_introduction"));
+				storeVO.setStoreOpenStatus(rs.getByte("store_open_status"));
+				storeVO.setStoreAccountStatus(rs.getInt("store_account_status"));
+				storeVO.setStoreAdminName(rs.getNString("store_admin_name"));
+				storeVO.setstoreAdminId(rs.getNString("store_admin_id"));
+				storeVO.setStoreBuildTime(rs.getDate("store_build_time"));
+				storeVO.setStoreUpdteTime(rs.getDate("store_update_time"));
+				storeVO.setStoreCommentNumber(rs.getInt("store_comment_number"));
+				storeVO.setStoreTotalStar(rs.getInt("store_total_star"));
+				storeVO.setStoreBusinessTime(rs.getString("store_business_time"));
+				
+			}
+			return storeVO;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public Boolean getByAdminId(String id) {
+
+		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/FASTERO", "root", "password");
+				PreparedStatement ps = conn
+						.prepareStatement("SELECT * FROM FASTERO.Store where store_admin_id = ?;");) {
+
+			ps.setString(1, id);
+
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next())
+				return true;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		return false;
+	}
+
 }

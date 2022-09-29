@@ -88,7 +88,7 @@ public class UserDAOIm implements UserDAO {
 	}
 
 	@Override
-	public String getByAccount(String account) throws Exception {
+	public UserVO getByAccount(String account) throws Exception {
 
 		final String sql = "select * from `User` where user_account = ?";
 
@@ -100,12 +100,25 @@ public class UserDAOIm implements UserDAO {
 
 			try (ResultSet rs = ps.executeQuery()) {
 				
-				if (rs.next()) {
-					System.out.println("帳號密碼查詢成功...回傳密碼");
-					return rs.getString("user_password");
+				UserVO vo = null;
+				while (rs.next()) {
+
+					// user_id user_account user_password user_name user_phone user_build_time
+					// user_status
+					// 'userId', 'userAccount', 'userPassword', 'userName', 'userPhone',
+					// 'userBuildTime', 'userStatus'
+
+					vo = new UserVO();
+					vo.setUserId(rs.getInt("user_id"));
+					vo.setUserAccount(rs.getString("user_account"));
+					vo.setUserPassword(rs.getString("user_password"));
+					vo.setUserName(rs.getString("user_name"));
+					vo.setUserPhone(rs.getString("user_phone"));
+					vo.setUserBuildTime(rs.getObject("user_build_time", LocalDateTime.class));
+//					System.out.println(vo.getUserBuildTime());
+					vo.setUserStatus(rs.getByte("user_status"));
 				}
-				System.out.println("帳號密碼查詢成功...查無帳號");
-				return null;
+				return vo;
 			}
 		}
 	}

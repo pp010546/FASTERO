@@ -53,7 +53,7 @@ public class OrderMasterDAOIm implements OrderMasterDAO {
 		List<OrderMasterVO> list = new ArrayList<OrderMasterVO>();
 
 		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FASTERO", "root", "password");
-				PreparedStatement ps = con.prepareStatement(OrderMasterSQL.GET_BY_ID);) {
+				PreparedStatement ps = con.prepareStatement(OrderMasterSQL.GET_WITH_STORE_NAME_BY_ID);) {
 			System.out.println("連線成功");
 
 			OrderMasterVO vo;
@@ -72,6 +72,72 @@ public class OrderMasterDAOIm implements OrderMasterDAO {
 					vo.setOrderTime(rs.getObject("order_time", LocalDateTime.class));
 					vo.setUpdateTime(rs.getObject("update_time", LocalDateTime.class));
 					vo.setOrderRemark(rs.getString("order_remark"));
+					vo.setStoreName(rs.getString("store_name"));
+
+					list.add(vo);
+				}
+			}
+			return list;
+
+		}
+	}
+	
+	public List<OrderMasterVO> getByStoreId(Integer id) throws Exception {
+		List<OrderMasterVO> list = new ArrayList<OrderMasterVO>();
+
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FASTERO", "root", "password");
+				PreparedStatement ps = con.prepareStatement(OrderMasterSQL.GET_BY_STORE_ID);) {
+			System.out.println("連線成功");
+
+			OrderMasterVO vo;
+
+			ps.setInt(1, id);
+
+			try (ResultSet rs = ps.executeQuery()) {
+
+				while (rs.next()) {
+					vo = new OrderMasterVO();
+					vo.setOrderId(rs.getInt("order_id"));
+					vo.setUserId(rs.getInt("user_id"));
+					vo.setStoreId(rs.getInt("store_id"));
+					vo.setOrderStatus(rs.getByte("order_status"));
+					vo.setOrderAmount(rs.getInt("order_amount"));
+					vo.setOrderTime(rs.getObject("order_time", LocalDateTime.class));
+					vo.setUpdateTime(rs.getObject("update_time", LocalDateTime.class));
+					vo.setOrderRemark(rs.getString("order_remark"));
+					vo.setStoreName(rs.getString("store_name"));
+					
+					list.add(vo);
+				}
+			}
+			return list;
+
+		}
+	}
+	public List<OrderMasterVO> getByUserId(Integer id) throws Exception {
+		List<OrderMasterVO> list = new ArrayList<OrderMasterVO>();
+
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FASTERO", "root", "password");
+				PreparedStatement ps = con.prepareStatement(OrderMasterSQL.GET_BY_USER_ID);) {
+			System.out.println("連線成功");
+
+			OrderMasterVO vo;
+
+			ps.setInt(1, id);
+
+			try (ResultSet rs = ps.executeQuery()) {
+
+				while (rs.next()) {
+					vo = new OrderMasterVO();
+					vo.setOrderId(rs.getInt("order_id"));
+					vo.setUserId(rs.getInt("user_id"));
+					vo.setStoreId(rs.getInt("store_id"));
+					vo.setOrderStatus(rs.getByte("order_status"));
+					vo.setOrderAmount(rs.getInt("order_amount"));
+					vo.setOrderTime(rs.getObject("order_time", LocalDateTime.class));
+					vo.setUpdateTime(rs.getObject("update_time", LocalDateTime.class));
+					vo.setOrderRemark(rs.getString("order_remark"));
+					vo.setStoreName(rs.getString("store_name"));
 
 					list.add(vo);
 				}

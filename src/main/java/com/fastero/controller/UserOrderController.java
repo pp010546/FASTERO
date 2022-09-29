@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,12 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fastero.common.LocalDateTimeAdapter;
 import com.fastero.service.impl.OrderMasterServiceIm;
-import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-@WebServlet("/orders/*")
-public class OrderMasterController extends HttpServlet {
+@WebServlet("/orders/user/*")
+public class UserOrderController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private Gson _gson = new GsonBuilder()
@@ -29,7 +25,6 @@ public class OrderMasterController extends HttpServlet {
 							 .enableComplexMapKeySerialization()
 							 .serializeNulls()
 							 .setDateFormat(DateFormat.DATE_FIELD)
-//							 .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
 							 .setPrettyPrinting()
 							 .setVersion(1.0)
 							 .create();
@@ -43,15 +38,16 @@ public class OrderMasterController extends HttpServlet {
 
 		String pathInfo = request.getPathInfo();
 		PrintWriter out = response.getWriter();
-
-		if (pathInfo != null) {
-			String id = pathInfo.split("/")[1];
-			out.print(_gson.toJson(service.getById(Integer.parseInt(id))));
-			
-
+		
+		if (pathInfo.split("/").length<=2) {
+			Integer userId = Integer.parseInt(pathInfo.split("/")[1]);
+			out.print(_gson.toJson(service.getAllForUser(userId)));
 			return;
-		} else {
-			out.print(_gson.toJson(service.getAll()));
+		}else {
+			Integer userId = Integer.parseInt(pathInfo.split("/")[1]);
+			Integer orderId = Integer.parseInt(pathInfo.split("/")[2]);
+			
+			out.print(_gson.toJson(service.getByIdForUser(orderId, userId)));
 		}
 
 	}

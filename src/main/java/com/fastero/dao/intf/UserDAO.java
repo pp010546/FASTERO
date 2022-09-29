@@ -12,7 +12,7 @@ public interface UserDAO {
 	
 	public Integer insert(UserVO vo);
 	
-	//傳帳號找密碼
-	public String getByAccount(String account) throws Exception;
+	//傳帳號回傳全部資料
+	public UserVO getByAccount(String account) throws Exception;
 
 }

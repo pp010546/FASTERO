@@ -51,6 +51,15 @@ public class StoreController extends HttpServlet {
 //		req.setAttribute("storelist", list);
 //		req.getRequestDispatcher("/store.jsp").forward(req, resp);
 //	}
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		setHeaders(response);
+		
+		PrintWriter out = response.getWriter();
+		
+		out.print(_gson.toJson(service.findAllStores()));
+		
+	}
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

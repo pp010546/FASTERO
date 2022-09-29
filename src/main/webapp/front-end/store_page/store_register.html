@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>會員註冊</title>
+    <title>商家註冊</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous" />
     <style>
@@ -28,7 +28,7 @@
 
     <h2 class="d-flex justify-content-center align-content-center">註冊會員</h2>
     <form action="http://192.168.18.4:8080/fastero/users" method="post" id="form_member_info">
-        <h3>管理者資料</h3>
+        <h3>店家負責人資料</h3>
 
         <p><label id="label_account">帳號：</label><input type="text" id="input_account" placeholder="xxx@xxxx.xxx">
             <span id="span_account_comment" style="font-size: 10px"> 帳號日後無法變更</span>
@@ -124,14 +124,14 @@
                 return response.json(); // 將取得的資料，再使用 .json() 解析資料
             }
             throw new Error(response.statusText);
-
+            
         }).then(function (data) { // 這裡真的取得資料：data
-
-            if (data.result == null) {
+            
+            if (data.code != 200) {
                 alert(data.message);
             } else {
                 alert("註冊成功!");
-                document.querySelector("#btn_reset").onclick;
+                window.location.href = "./member_page.html";
             }
 
         }).catch(function (error) { // 發生任何錯誤，就會執行 catch 裡的程式

@@ -30,5 +30,12 @@ public class Regex {
 				.matcher(phone)
 				.matches();
 	}
+	
+	public static boolean idcheck(String id) {
+		
+		return Pattern.compile("^[A-Za-z][12]\\d{8}$")
+				.matcher(id)
+				.matches();
+	}
 
 }

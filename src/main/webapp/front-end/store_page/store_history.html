@@ -47,7 +47,6 @@
                     <th>訂單日期</th>
                     <th>訂單金額</th>
                     <th>訂單明細</th>
-                    <th>店家名稱</th>
                     <th>評論</th>
                 </tr>
             </thead>
@@ -79,57 +78,60 @@
         // "productId": 6,
         // "price": 180,
         // "quantity": 1
-        const baseUrl = "http://localhost:8080/fastero/orders/user";
-        const findStoreURL = "http://localhost:8080/fastero/stores"
+        const baseUrl = "http://localhost:8080/fastero/orders/store";
 
         const btn = document.querySelector("#btn_submit_query");
         const input = document.querySelector("#input_query_order");
 
-        //當頁面載入時，以session內的userId去get所有訂單
-        window.onload = () => {
-            get("/" + sessionStorage.getItem('userId'));
-
+        //當頁面載入時，以session內的storeId去get所有訂單
+        window.onload = () =>{
+            get("/" + sessionStorage.getItem('storeId'));
         }
 
         //以訂單編號搜尋
-        //先以訂單編號查詢，如果之後有餘力再以訂單關鍵字
-        btn.onclick = () => {
+        btn.onclick = () =>{
             let value = input.value;
-
-            if (value != "") {
-                get("/" + sessionStorage.getItem("userId") + "/" + value);
+            
+            if(value != ""){
+                get("/" + sessionStorage.getItem("storeId") + "/" + value);
                 return;
             }
             get("");
 
         }
 
-
-        async function get(id) {
+            
+            async function get(id) {
             await fetch(baseUrl + id)
                 .then((res) => res.json())
                 .then((data) => {
-                    if (data.result == "") {
+                    if(data.result == ""){
                         alert("此訂單編號不存在!");
                         return;
-                    } else {
+                    }else{
 
-                        document.querySelector("#order").innerHTML =
-                            data.result.map((e) => orderTamplate(e.orderId, e.orderTime, e.orderAmount, e.storeName, e.orderStatus)).join("");
+                        document.querySelector("#order").innerHTML = 
+                        data.result.map((e) => orderTamplate(e.orderId, e.orderTime, e.orderAmount, e.storeId, e.orderStatus)).join("");
                     }
                 })
         }
 
-        function orderTamplate(orderId, orderTime, orderAmount, storeName, orderStatus) {
+        //先以訂單編號查詢，如果之後有餘力再以訂單關鍵字
+        function orderTamplate(orderId, orderTime, orderAmount, orderStatus) {
 
-            return `<tr>
+        return `<tr>
             <td>${orderId}</td>
             <td>${orderTime}</td>
             <td>${orderAmount}</td>
             <td><a href="#">查看</td>
-            <td>${storeName}</td>
             <td><a href="#">${orderStatus}</td>
         </tr>`
+            // return `<tr>
+            //     <th>${orderId}</th>
+            //     <th>${productId}</th>
+            //     <th>${price}</th>
+            //     <th>${quantity}</th>
+            // </tr>`
         }
 
     </script>
