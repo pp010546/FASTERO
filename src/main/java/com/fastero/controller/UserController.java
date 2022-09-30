@@ -45,10 +45,11 @@ public class UserController extends HttpServlet {
 		
 		if(pathInfo != null) {
 			response.getWriter().print(_gson.toJson(service.getById(Integer.parseInt(pathInfo.split("/")[1]))));
+		}else {
 			
+			response.getWriter().print(_gson.toJson(service.getAll()));
 		}
 		
-//		response.getWriter().print(_gson.toJson(service.getAll()));
 
 	}
 
@@ -58,14 +59,20 @@ public class UserController extends HttpServlet {
 		
 		setHeaders(response);
 		PrintWriter out = response.getWriter();
-		// Read POST
-//		BufferedReader read = request.getReader();
-		// 存字串
-//		String json = read.readLine();
 		
-//		System.out.println(json);
 		UserVO vo = _gson.fromJson(request.getReader().readLine(), UserVO.class);
 		out.print(_gson.toJson(service.register(vo)));
+	}
+	
+	@Override
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		setHeaders(response);
+		PrintWriter out = response.getWriter();
+		
+		UserVO vo = _gson.fromJson(request.getReader().readLine(), UserVO.class);
+
+		out.print(_gson.toJson(service.update(vo)));
+	
 	}
 	
 	@Override

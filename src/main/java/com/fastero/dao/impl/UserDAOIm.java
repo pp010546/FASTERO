@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,8 +61,36 @@ public class UserDAOIm implements UserDAO {
 	}
 
 	@Override
-	public List<UserVO> getById(Integer id) {
-
+	public UserVO getById(Integer id) throws SQLException {
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FASTERO", "root", "password");
+				PreparedStatement ps = con.prepareStatement(UserSQL.GET_BY_ID);) {
+			
+			ps.setInt(1, id);
+			
+			try(ResultSet rs = ps.executeQuery();){
+				
+				UserVO vo = null;
+				
+				if(rs.next()) {
+					// user_id user_account user_password user_name user_phone user_build_time
+					// user_status
+					// 'userId', 'userAccount', 'userPassword', 'userName', 'userPhone',
+					// 'userBuildTime', 'userStatus'
+					vo = new UserVO();
+					vo.setUserId(rs.getInt("user_id"));
+					vo.setUserAccount(rs.getString("user_account"));
+					vo.setUserPassword(rs.getString("user_password"));
+					vo.setUserName(rs.getString("user_name"));
+					vo.setUserPhone(rs.getString("user_phone"));
+					vo.setUserBuildTime(rs.getObject("user_build_time", LocalDateTime.class));
+					vo.setUserStatus(rs.getByte("user_status"));
+					
+					return vo;
+				}
+				
+			}
+			
+		}
 		return null;
 	}
 
@@ -120,6 +149,38 @@ public class UserDAOIm implements UserDAO {
 				}
 				return vo;
 			}
+		}
+	}
+
+	@Override
+	public Integer update(UserVO vo) throws SQLException {
+
+		final String sql = "update `User` set user_password = ?, user_name = ?, user_phone = ? where user_id = ?";
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FASTERO", "root", "password");
+				PreparedStatement ps = con.prepareStatement(sql);){
+			
+			ps.setString(1, vo.getUserPassword());
+			ps.setString(2, vo.getUserName());
+			ps.setString(3, vo.getUserPhone());
+			ps.setInt(4, vo.getUserId());
+			
+			return ps.executeUpdate();
+			
+		}
+	}
+
+	@Override
+	public Integer updateNoPassword(UserVO vo) throws SQLException {
+		final String sql = "update `User` set user_name = ?, user_phone = ? where user_id = ?";
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/FASTERO", "root", "password");
+				PreparedStatement ps = con.prepareStatement(sql);){
+			
+			ps.setString(1, vo.getUserName());
+			ps.setString(2, vo.getUserPhone());
+			ps.setInt(3, vo.getUserId());
+			
+			return ps.executeUpdate();
+			
 		}
 	}
 
