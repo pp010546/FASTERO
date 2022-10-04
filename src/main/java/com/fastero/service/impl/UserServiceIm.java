@@ -90,4 +90,19 @@ public class UserServiceIm implements UserService {
 		}
 
 	}
+
+	@Override
+	public Result update(UserVO vo) {
+		try {
+			// 若傳進來的vo沒有password，要呼叫updateNoPassword方法
+			if(vo.getUserPassword() == null) {
+				return R.success(DAO.updateNoPassword(vo));
+			}else {
+				return R.success(DAO.update(vo));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return R.fail(e.toString());
+		}
+	}
 }

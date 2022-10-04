@@ -12,5 +12,7 @@ public interface UserService {
 	public Result register(UserVO vo);
 	
 	public Result login(String account, String password);
+	
+	public Result update(UserVO vo);
 
 }
