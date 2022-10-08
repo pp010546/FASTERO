@@ -70,7 +70,7 @@ public class UserController extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		UserVO vo = _gson.fromJson(request.getReader().readLine(), UserVO.class);
-
+		
 		out.print(_gson.toJson(service.update(vo)));
 	
 	}

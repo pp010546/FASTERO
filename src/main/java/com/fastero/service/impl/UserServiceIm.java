@@ -95,9 +95,11 @@ public class UserServiceIm implements UserService {
 	public Result update(UserVO vo) {
 		try {
 			// 若傳進來的vo沒有password，要呼叫updateNoPassword方法
-			if(vo.getUserPassword() == null) {
+			if(vo.getUserPassword().isEmpty()) {
+//				System.out.println("service call updateNP");
 				return R.success(DAO.updateNoPassword(vo));
 			}else {
+//				System.out.println("service call update");
 				return R.success(DAO.update(vo));
 			}
 		} catch (Exception e) {

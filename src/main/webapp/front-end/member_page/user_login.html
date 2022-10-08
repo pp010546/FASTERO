@@ -150,6 +150,8 @@
         }
     }
 
+    // window.onkeypress() = btn.onclic
+
     btn.onclick = () => {
 
         let data = {
@@ -158,9 +160,9 @@
         }
 
         fetch("http://localhost:8080/fastero/login/users", {
-            // headers: {
-            //     'content-type': 'application/json'
-            // },
+            headers: {
+                'content-type': 'application/json'
+            },
             method: "POST", // 以 POST 為例
             body: JSON.stringify(data) // 欲傳送的資料
 
