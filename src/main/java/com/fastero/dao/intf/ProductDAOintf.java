@@ -11,5 +11,6 @@ public interface ProductDAOintf {
     public void delete(Integer productId);
     public ProductVO findByPrimaryKey(Integer productId);
     public List<ProductVO> getAll();
+    public List<ProductVO> getBystoreId();
 
 }
