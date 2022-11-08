@@ -9,6 +9,7 @@ public class ProductVO {
 	private String productIntroduction;
 	private Integer productPrice;
 	private Integer productSatus;
+	private String productImg;
 	private Date productWaitTime;
 	private Date productBuildTime;
 	private Date productUpdateTime;
@@ -68,4 +69,10 @@ public class ProductVO {
 	public void setProduct_update_time(Date productUpdateTime) {
 		this.productUpdateTime = productUpdateTime;
 	}
+    public String getProductImg() {
+        return productImg;
+    }
+    public void setProductImg(String productImg) {
+        this.productImg = productImg;
+    }
 }
