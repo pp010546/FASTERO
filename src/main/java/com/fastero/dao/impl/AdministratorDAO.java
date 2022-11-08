@@ -12,7 +12,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import org.eclipse.jdt.internal.compiler.batch.Main;
+import com.fastero.bean.AdministratorVO;
+import com.fastero.dao.intf.AdministratorDAOintf;
 
 public class AdministratorDAO implements AdministratorDAOintf {
 
@@ -21,7 +22,7 @@ public class AdministratorDAO implements AdministratorDAOintf {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TGA103G3");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/FASTERO");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
