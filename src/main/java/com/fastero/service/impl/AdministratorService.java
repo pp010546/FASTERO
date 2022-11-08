@@ -1,6 +1,10 @@
-package com.fastreo.service.impl;
+package com.fastero.service.impl;
 
 import java.util.List;
+
+import com.fastero.bean.AdministratorVO;
+import com.fastero.dao.impl.AdministratorDAO;
+import com.fastero.dao.intf.AdministratorDAOintf;
 
 
 
@@ -60,7 +64,6 @@ public class AdministratorService {
 	
 
 	public AdministratorVO getlogin(AdministratorVO loginAdmin) {
-		// TODO Auto-generated method stub 
 		return dao.login(loginAdmin);
 	}
 }

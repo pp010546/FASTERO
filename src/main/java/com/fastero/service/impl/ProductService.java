@@ -2,11 +2,18 @@ package com.fastero.service.impl;
 
 import java.util.List;
 
+import javax.naming.NamingException;
+
+import com.fastero.dao.impl.ProductDAO;
 import com.fastero.dao.intf.ProductDAOintf;
 import com.fastero.model.ProductVO;
 
 public class ProductService {
 	private ProductDAOintf dao;
+	
+	public ProductService() {
+	   dao = new ProductDAO();
+    }
 
 	public ProductVO addProduct(Integer storeId, String productName, String productIntroduction,
 			Integer productPrice, Integer productSatus, java.sql.Date productWaitTime)
@@ -51,5 +58,14 @@ public class ProductService {
 	}
 	public List<ProductVO> getAll(){
 		return dao.getAll();
+	}
+	
+	public List<ProductVO> getBystoreId(){
+	    try {
+	        return dao.getBystoreId();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+	    return null;
 	}
 }

@@ -2,7 +2,8 @@ package com.fastero.service.impl;
 
 import java.util.List;
 
-import com.administrator.model.AdministratorVO;
+import com.fastero.bean.StoreTypeVO;
+import com.fastero.dao.impl.StoreTypeDAO;
 
 public class StoreTypeService {
 
